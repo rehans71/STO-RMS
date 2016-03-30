@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- <global-method-security pre-post-annotations="enabled"/> -->
+
+	<security:http auto-config="true" use-expressions="true">
+<!--  	<security:intercept-url pattern="/favicon.ico" access="permitAll"/> -->
+		<security:intercept-url pattern="/login" access="permitAll" />
+		<security:intercept-url pattern="/*" access="hasRole('ROLE_ADMIN')" />
+		<security:form-login login-page="/login"
+		default-target-url="/users" authentication-failure-url="/login?error" />
+		<security:logout logout-success-url="/users" />
+	</security:http>
+<!-- 
+	<security:authentication-manager>
+	<security:authentication-provider>
+		<security:user-service>
+			<security:user name="rehan" password="123" authorities="ROLE_USER" />
+		</security:user-service>
+	</security:authentication-provider>
+	</security:authentication-manager> 
+ -->
+ 
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="userDetailsService">
+        </security:authentication-provider>
+    </security:authentication-manager> 
+<!-- 
+    <bean id="authenticationProvider" 
+    	class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService" />
+    </bean>
+
+    <bean id="userDetailsService" class="com.sto.service.UserDetailsServiceImpl" />
+    
+ -->
+
+
+</beans>

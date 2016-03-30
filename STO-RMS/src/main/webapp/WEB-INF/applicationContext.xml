@@ -1,0 +1,69 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+	default-autowire="byName">
+
+<!-- 
+ -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.sto">
+		<context:exclude-filter type="regex" expression="com.sto.controllers"/>
+	</context:component-scan>
+	<tx:annotation-driven />
+
+	<jpa:repositories base-package="com.sto.repositories" />
+
+<!-- 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="datasourceBean">
+			<bean class="org.hsqldb.jdbc.JDBCDataSource">
+				<property name="url" value="jdbc:hsqldb:mem:trainingdb" />
+				<property name="user" value="sa"></property>
+				<property name="password" value=""></property>
+			</bean>
+		</property>
+	</bean> -->
+	
+	  <!-- MySQL Datasource with Commons DBCP connection pooling -->
+	  <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	    <property name="url" value="jdbc:mysql://localhost:3306/sto"/>
+	    <property name="username" value="root"/>
+<!--      <property name="password" value="root"/> -->	
+	  </bean>
+	  
+	   <!-- EntityManagerFactory -->
+	  <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+	    <property name="persistenceUnitName" value="persistenceUnit"/>
+	    <property name="dataSource" ref="dataSource"/>
+	    		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+<!-- 				<property name="generateDdl" value="true" /> -->
+<!-- 				<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" /> -->
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
+			</bean>
+		</property>
+	  </bean>
+
+<!-- 	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+				<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+			</bean>
+		</property>
+	</bean> -->
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	
+	</bean>
+</beans>
