@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-public class HomeController
+public class HomeController extends BaseController
 {	
+	@Override
+	protected String getHeaderTitle() {
+		return "Home";
+	}
 	
 	@RequestMapping("/home")
 	public String home(Model model)

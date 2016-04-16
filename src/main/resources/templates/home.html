@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-
-<head>
-<title>Home</title>
-</head>
-<body>
-	<h1>Resource Management System</h1>
-
-</body>
-
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout/mainLayout">
+      
+      <head>
+        <title>Home</title>
+    </head>
+    <body>
+    	<div layout:fragment="pageHeader">
+        <section class="content-header">
+        	<h1>
+            	RMS
+          	</h1>
+        </section>
+        </div>
+    	<div layout:fragment="content">
+	        <p>Welcome</p>
+    	</div>
+    	
+    </body>
+    
 </html>
