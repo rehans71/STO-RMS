@@ -1,4 +1,5 @@
 
+delete from emp_schedule;
 delete from role_permission;
 delete from  user_role;
 delete from  permissions;
@@ -37,4 +38,13 @@ insert into user_role(user_id, role_id) values
 (2,2),
 (3,3),
 (4,3)
+;
+
+insert into emp_schedule(id, emp_id, from_date, to_date, status) values
+(1,2,'2016-05-02', '2016-05-04', 'AVAILABLE_ON_SHIP_ALLURE'),
+(2,2,'2016-05-05', '2016-05-08', 'OUT_OF_OFFICE_ON_SHIP_PROJECT'),
+(3,2,'2016-05-09', '2016-05-14', 'OUT_OF_OFFICE_DRY_DOCK'),
+(4,2,'2016-05-15', '2016-05-19', 'OUT_OF_OFFICE_NEW_BUILD'),
+(5,2,'2016-05-20', '2016-05-24', 'AVAILABLE_IN_OFFICE'),
+(6,2,'2016-05-25', '2016-05-30', 'OUT_OF_OFFICE_VACATION')
 ;

@@ -10,9 +10,15 @@
     <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css}"/>
     <link rel="stylesheet" th:href="@{https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css}"/>
+    
+    <!-- fullCalendar 2.2.5-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/fullcalendar/fullcalendar.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/plugins/fullcalendar/fullcalendar.print.css}" media="print"/>
+    
     <link rel="stylesheet" th:href="@{/assets/AdminLTE/css/AdminLTE.min.css}"/>
     <link rel="stylesheet" th:href="@{/assets/AdminLTE/css/skins/skin-blue.min.css}"/>
 
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -93,7 +99,7 @@
             <li th:class="${CURRENT_MENU == 'Users'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/users'}"><i class="fa fa-users"></i> <span>Users</span></a></li>
             <li th:class="${CURRENT_MENU == 'Roles'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_ROLES')"><a href="#" th:href="@{'/roles'}"><i class="fa fa-user"></i> <span>Roles</span></a></li>
             <li th:class="${CURRENT_MENU == 'Permissions'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PERMISSIONS')"><a href="#" th:href="@{'/permissions'}"><i class="fa fa-shield"></i> <span>Permissions</span></a></li>
-            
+            <li th:class="${CURRENT_MENU == 'Schedule'}? 'active' : ''"><a href="#" th:href="@{'/schedule'}"><i class="fa fa-calendar"></i> <span>Schedule</span></a></li>
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -144,7 +150,16 @@
     <!-- REQUIRED JS SCRIPTS -->
     <script th:src="@{'/assets/plugins/jQuery/jQuery-2.1.4.min.js'}"></script>
     <script th:src="@{'/assets/bootstrap/js/bootstrap.min.js'}"></script>
-    <script th:src="@{'/assets/AdminLTE/js/app.min.js'}"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script th:src="@{'/assets/plugins/fullcalendar/fullcalendar.min.js'}"></script>
     
+    <script th:src="@{'/assets/AdminLTE/js/app.min.js'}"></script>
+  
+  	<div layout:fragment="pageLevelScript">
+	
+	</div>
+		    
   </body>
+  
 </html>
