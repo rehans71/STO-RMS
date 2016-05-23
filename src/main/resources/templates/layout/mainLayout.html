@@ -99,7 +99,7 @@
             <li th:class="${CURRENT_MENU == 'Users'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/users'}"><i class="fa fa-users"></i> <span>Users</span></a></li>
             <li th:class="${CURRENT_MENU == 'Roles'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_ROLES')"><a href="#" th:href="@{'/roles'}"><i class="fa fa-user"></i> <span>Roles</span></a></li>
             <li th:class="${CURRENT_MENU == 'Permissions'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PERMISSIONS')"><a href="#" th:href="@{'/permissions'}"><i class="fa fa-shield"></i> <span>Permissions</span></a></li>
-            <li th:class="${CURRENT_MENU == 'Schedule'}? 'active' : ''"><a href="#" th:href="@{'/schedule'}"><i class="fa fa-calendar"></i> <span>Schedule</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Calendar'}? 'active' : ''"><a href="#" th:href="@{'/calendar'}"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

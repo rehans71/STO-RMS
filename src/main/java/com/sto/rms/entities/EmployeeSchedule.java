@@ -42,7 +42,7 @@ public class EmployeeSchedule
 	private Date toDate;
 	
 	@Enumerated(EnumType.STRING)
-	private EmployeeStatus status;
+	private EmployeeStatusEnum status;
 
 	public Integer getId() {
 		return id;
@@ -76,11 +76,11 @@ public class EmployeeSchedule
 		this.toDate = toDate;
 	}
 
-	public EmployeeStatus getStatus() {
+	public EmployeeStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(EmployeeStatus status) {
+	public void setStatus(EmployeeStatusEnum status) {
 		this.status = status;
 	}
 	

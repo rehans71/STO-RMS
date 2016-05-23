@@ -12,6 +12,9 @@ target
 .springBeans
 .tern-project
 
+*.iml
+.idea
+
 bin
 build
 .gradle
