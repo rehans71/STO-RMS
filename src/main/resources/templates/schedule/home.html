@@ -43,8 +43,8 @@
                       <th class="bg-purple">Dec</th>
                     </tr>
                     <tr th:each="cal : ${calendars}">
-                      <td><button class="btn btn-block btn-primary btn-flat" th:text="${cal.empName}">Emp 1</button></td>
-                      <td th:each="status : ${cal.employeeStatus}">
+                      <td style="padding: 0px;"><button class="btn btn-block btn-primary btn-flat" th:text="${cal.empName}">Emp 1</button></td>
+                      <td style="padding: 0px; border: 0px;" th:each="status : ${cal.employeeStatus}">
                       	<button class="btn btn-block btn-default btn-flat" 
                       			th:classappend="${status.style}"
                       			th:text="${status.status}"
