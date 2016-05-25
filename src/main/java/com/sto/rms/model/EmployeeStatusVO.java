@@ -7,7 +7,7 @@ package com.sto.rms.model;
  * @author Siva
  *
  */
-public class EmployeeStatus 
+public class EmployeeStatusVO 
 {
 	private Integer year;
 	private Integer month;

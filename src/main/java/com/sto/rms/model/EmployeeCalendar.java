@@ -14,7 +14,7 @@ public class EmployeeCalendar
 {
 	private Integer empId;
 	private String empName;
-	private List<EmployeeStatus> employeeStatus = new ArrayList<>();
+	private List<EmployeeStatusVO> employeeStatus = new ArrayList<>();
 	
 	public Integer getEmpId() {
 		return empId;
@@ -28,10 +28,10 @@ public class EmployeeCalendar
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
-	public List<EmployeeStatus> getEmployeeStatus() {
+	public List<EmployeeStatusVO> getEmployeeStatus() {
 		return employeeStatus;
 	}
-	public void setEmployeeStatus(List<EmployeeStatus> employeeStatus) {
+	public void setEmployeeStatus(List<EmployeeStatusVO> employeeStatus) {
 		this.employeeStatus = employeeStatus;
 	}
 	

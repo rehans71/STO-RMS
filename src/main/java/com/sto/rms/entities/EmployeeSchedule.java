@@ -7,13 +7,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,8 +40,9 @@ public class EmployeeSchedule
 	@Column(name="to_date", nullable=false)
 	private Date toDate;
 	
-	@Enumerated(EnumType.STRING)
-	private EmployeeStatusEnum status;
+	@OneToOne
+	@JoinColumn(name="status")
+	private EmployeeStatus status;
 
 	public Integer getId() {
 		return id;
@@ -76,11 +76,11 @@ public class EmployeeSchedule
 		this.toDate = toDate;
 	}
 
-	public EmployeeStatusEnum getStatus() {
+	public EmployeeStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(EmployeeStatusEnum status) {
+	public void setStatus(EmployeeStatus status) {
 		this.status = status;
 	}
 	

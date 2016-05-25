@@ -28,7 +28,7 @@
                   <p>Click to see Employee's monthly Calendar</p>
                   <table class="table table-bordered text-center">
                     <tr>
-                      <th class="bg-navy">Employee</th>
+                      <th class="bg-purple"><bold>Employee</bold></th>
                       <th class="bg-purple">Jan</th>
                       <th class="bg-purple">Feb</th>
                       <th class="bg-purple">Mar</th>
@@ -43,15 +43,14 @@
                       <th class="bg-purple">Dec</th>
                     </tr>
                     <tr th:each="cal : ${calendars}">
-                      <td style="padding: 0px;"><button class="btn btn-block btn-primary btn-flat" th:text="${cal.empName}">Emp 1</button></td>
+                      <td style="padding: 0px;"><button class="btn btn-block bg-navy btn-flat" th:text="${cal.empName}">Emp 1</button></td>
                       <td style="padding: 0px; border: 0px;" th:each="status : ${cal.employeeStatus}">
-                      	<button class="btn btn-block btn-default btn-flat" 
-                      			th:classappend="${status.style}"
-                      			th:text="${status.status}"
-                      			data-toggle="modal" 
-                      			data-target=".bs-example-modal-lg">OV</button>
-                      </td>                     
-                      
+                      	<a class="btn btn-block btn-default btn-flat" 
+                      			th:classappend="${status.style}"                      			
+                      			href="javascript:void(0);"
+                      			data-toggle="tooltip" data-placement="right"
+                      			th:title="${status.status}">&nbsp;</a>
+                      </td>                      
                     </tr>
                   
                    
