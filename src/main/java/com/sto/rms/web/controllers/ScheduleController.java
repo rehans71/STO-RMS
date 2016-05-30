@@ -11,15 +11,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sto.rms.entities.EmployeeSchedule;
 import com.sto.rms.entities.EmployeeStatus;
 import com.sto.rms.entities.User;
 import com.sto.rms.model.EmployeeCalendar;
+import com.sto.rms.model.EmployeeStatusEvent;
 import com.sto.rms.model.EmployeeStatusVO;
 import com.sto.rms.repositories.UserRepository;
 import com.sto.rms.services.CalendarService;
@@ -43,8 +48,11 @@ public class ScheduleController extends BaseController
 	}
 	
 	@RequestMapping("/calendar")
-	public String home(Model model)
+	public String home(Model model, @RequestParam(value="year", required=false) String strYear)
 	{
+		if(StringUtils.isBlank(strYear)) {
+			strYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+		}
 		Map<String, EmployeeStatus> statusCodeMap = new HashMap<>();
 		
 		List<EmployeeStatus> allEmployeeStatuses = calendarService.getAllEmployeeStatuses();
@@ -57,7 +65,9 @@ public class ScheduleController extends BaseController
 		//<empId, <Month,(OV,OOO)>>
 		Map<Integer, Map<String,List<EmployeeStatus>>> statusMap = new HashMap<>();
 		
-		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int year = NumberUtils.toInt(strYear, Calendar.getInstance().get(Calendar.YEAR));
+		model.addAttribute("year", year);
+		
 		List<EmployeeSchedule> employeesSchedule = calendarService.getEmployeesSchedule(year);
 		for (EmployeeSchedule employeeSchedule : employeesSchedule)
 		{
@@ -152,9 +162,38 @@ public class ScheduleController extends BaseController
 			calendars.add(employeeCalendar);
 		}*/
 		model.addAttribute("calendars", calendars);
-		return "schedule/home";
+		return "schedule/calendar";
 	}
 
+	@RequestMapping("/calendar/events")
+	@ResponseBody
+	public List<EmployeeStatusEvent> events(Model model, 
+			@RequestParam(value="empId") int empId,
+			@RequestParam(value="year") int year,
+			@RequestParam(value="month") int month) throws Exception
+	{
+		System.err.println(empId+":"+year+":"+month);
+		List<EmployeeStatusEvent> events = new ArrayList<>();
+		//dummy data
+		EmployeeStatusEvent e1 = new EmployeeStatusEvent();
+		e1.setTitle("Event 1");
+		e1.setStart((year+"-"+month+"-01"));
+		e1.setEnd((year+"-"+month+"-05"));
+		e1.setBorderColor("#f39c12");
+		e1.setBackgroundColor("#f39c12");
+		events.add(e1);
+		
+		EmployeeStatusEvent e2 = new EmployeeStatusEvent();
+		e2.setTitle("Event 2");
+		e2.setStart((year+"-"+month+"-15"));
+		e2.setEnd((year+"-"+month+"-25"));
+		e2.setBorderColor("#f39c12");
+		e2.setBackgroundColor("#f39c12");
+		events.add(e2);
+		
+		return events;
+	}
+	
 	public static String getMonthName(int month){
 	    String[] monthNames = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
 	    						"JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
