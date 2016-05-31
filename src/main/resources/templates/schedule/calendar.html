@@ -85,47 +85,20 @@
             </div><!-- /.col -->
             </div>
     	</div>
-    	
-    	
 
     	<div layout:fragment="pageLevelScript">
 			<script>
 		    	$(document).ready(function() {
 		    		var date = new Date();
-			        var d = date.getDate(), m = date.getMonth(), y = date.getFullYear();
-		             
+		            var year = date.getFullYear(), month = date.getMonth(), empid = -1;
 		    		$('#calModel').on('shown.bs.modal', function (event) {
 		    			var cell = $(event.relatedTarget);
-		    			alert(cell.data('month'));
-		    			var year = cell.data('year'), month = cell.data('month'), empid = cell.data('empid');
-		    			var gotoDate = $.fullCalendar.moment(year+'-'+month+'-01');
-		    			//$('#calendar').fullCalendar('render');
-		    			//$('#calendar').fullCalendar('today');
-		    			//alert(empid+":"+year+":"+month);
-		    			var loadEvents = function(start, end, timezone, callback) {
-		            	 //alert('load events');
-		            	 
-		            	 $.ajax({
-					            url: 'calendar/events',
-					            dataType: 'json',
-					            data: {
-					                empId: empid,
-					                year: year,
-					                month: month
-					            },
-					            success: function(resp) {
-					                var events = [];
-					                $.each(resp, function(i, item) {
-					                    //alert(item);
-					                    events.push(item);
-					                });
-					                 
-					                callback(events);
-					            }
-					        });
-		            	 
-		             };
-		             
+		    			year = cell.data('year');
+		    			month = cell.data('month');
+		    			empid = cell.data('empid');
+		    			//console.log('month='+month);
+		    			var gotoDate = new Date(year, month);
+		    			
 		             $('#calendar').fullCalendar({
 			             header: {
 			               left : 'title',
@@ -139,16 +112,34 @@
 			               week: 'Week',
 			               day: 'Day'
 			             },		
-			             events: loadEvents,
+			             events: function(start, end, timezone, callback) {
+			            	// alert('load events ->'+empid+":"+year+":"+month);
+			            	 $.ajax({
+						            url: 'calendar/events',
+						            dataType: 'json',
+						            data: {
+						                empId: empid,
+						                year: year,
+						                month: month
+						            },
+						            success: function(resp) {
+						                var events = [];
+						                $.each(resp, function(i, item) {
+						                    events.push(item);
+						                });
+						                 
+						                callback(events);
+						            }
+						        });
+			            	 
+			             },
 			             lazyFetching: true
 			             
 			           });
-		             
-		    		   $('#calendar').fullCalendar( 'gotoDate', gotoDate );
+		               //console.log(gotoDate);
+		    		   $('#calendar').fullCalendar( 'gotoDate', gotoDate);
 		    			
 		    		});
-		    		
-		        
 		    	});
 		   </script> 
 		</div>

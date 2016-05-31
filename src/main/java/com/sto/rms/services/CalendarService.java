@@ -1,6 +1,7 @@
 
 package com.sto.rms.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -35,5 +36,10 @@ public class CalendarService
 	public List<EmployeeSchedule> getEmployeesSchedule(int year)
 	{
 		return employeeScheduleRepository.findByYear(String.valueOf(year));
+	}
+	
+	public List<EmployeeSchedule> findByEmpStatusByDateRange(Integer empId, Date start, Date end)
+	{
+		return employeeScheduleRepository.findByEmpStatusByDateRange(empId, start, end);
 	}
 }

@@ -28,6 +28,7 @@ import com.sto.rms.model.EmployeeStatusEvent;
 import com.sto.rms.model.EmployeeStatusVO;
 import com.sto.rms.repositories.UserRepository;
 import com.sto.rms.services.CalendarService;
+import com.sto.rms.utils.CommonUtils;
 
 /**
  * @author Siva
@@ -101,7 +102,7 @@ public class ScheduleController extends BaseController
 			if(!statusMap.containsKey(userId))
 			{
 				List<EmployeeStatusVO> employeeStatus = new ArrayList<>();
-				for (int j = 1; j <= 12; j++) 
+				for (int j = 0; j < 12; j++) 
 				{
 					EmployeeStatusVO status = new EmployeeStatusVO();
 					status.setYear(year);
@@ -142,25 +143,6 @@ public class ScheduleController extends BaseController
 			calendars.add(employeeCalendar);
 		}
 		
-		/*for (int i = 1; i <= 10; i++) 
-		{
-			EmployeeCalendar employeeCalendar = new EmployeeCalendar();
-			employeeCalendar.setEmpId(i);
-			employeeCalendar.setEmpName("Employee "+i);
-			List<EmployeeStatusVO> employeeStatus = new ArrayList<>();
-			for (int j = 1; j <= 12; j++) {
-				EmployeeStatusVO status = new EmployeeStatusVO();
-				status.setYear(year);
-				status.setMonth(j);
-				String statusVal = statusCodes[new Random().nextInt(statusCodes.length)];
-				status.setStatus(statusVal);
-				status.setStyle(statusCodeColorMap.get(statusVal));
-				employeeStatus.add(status);
-			}
-			employeeCalendar.setEmployeeStatus(employeeStatus);
-			
-			calendars.add(employeeCalendar);
-		}*/
 		model.addAttribute("calendars", calendars);
 		return "schedule/calendar";
 	}
@@ -172,25 +154,27 @@ public class ScheduleController extends BaseController
 			@RequestParam(value="year") int year,
 			@RequestParam(value="month") int month) throws Exception
 	{
-		System.err.println(empId+":"+year+":"+month);
+		//month comes as zero-based value
+		//month = month + 1;
+		Date date = CommonUtils.buildDate(year, month, 1);
+		Date start = CommonUtils.getStartOfMonth(date);
+		Date end = CommonUtils.getEndOfMonth(date);
+		
+		List<EmployeeSchedule> empSchedules = calendarService.findByEmpStatusByDateRange(empId, start, end);
+		
 		List<EmployeeStatusEvent> events = new ArrayList<>();
-		//dummy data
-		EmployeeStatusEvent e1 = new EmployeeStatusEvent();
-		e1.setTitle("Event 1");
-		e1.setStart((year+"-"+month+"-01"));
-		e1.setEnd((year+"-"+month+"-05"));
-		e1.setBorderColor("#f39c12");
-		e1.setBackgroundColor("#f39c12");
-		events.add(e1);
 		
-		EmployeeStatusEvent e2 = new EmployeeStatusEvent();
-		e2.setTitle("Event 2");
-		e2.setStart((year+"-"+month+"-15"));
-		e2.setEnd((year+"-"+month+"-25"));
-		e2.setBorderColor("#f39c12");
-		e2.setBackgroundColor("#f39c12");
-		events.add(e2);
-		
+		for (EmployeeSchedule employeeSchedule : empSchedules)
+		{
+			EmployeeStatusEvent e1 = new EmployeeStatusEvent();
+			e1.setTitle(employeeSchedule.getStatus().getDescription());
+			e1.setStart(new SimpleDateFormat("yyyy-MM-dd").format(employeeSchedule.getFromDate()));
+			e1.setEnd(new SimpleDateFormat("yyyy-MM-dd").format(employeeSchedule.getToDate()));
+			e1.setBorderColor("#f39c12");
+			e1.setBackgroundColor("#f39c12");
+			events.add(e1);
+		}
+				
 		return events;
 	}
 	
