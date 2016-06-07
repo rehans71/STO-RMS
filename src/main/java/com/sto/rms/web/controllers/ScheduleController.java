@@ -68,7 +68,7 @@ public class ScheduleController extends BaseController
 		List<EmployeeCalendar> calendars = new ArrayList<>();
 				
 		//<empId, <Month,(OV,OOO)>>
-		Map<Integer, Map<String,List<EmployeeStatusVO>>> statusMap = new HashMap<>();
+		Map<Integer, Map<String,EmployeeStatusVO>> statusMap = new HashMap<>();
 		
 		int year = NumberUtils.toInt(strYear, Calendar.getInstance().get(Calendar.YEAR));
 		model.addAttribute("year", year);
@@ -81,23 +81,26 @@ public class ScheduleController extends BaseController
 			if(!statusMap.containsKey(userId)){
 				statusMap.put(userId, new HashMap<>());
 			}
-			Map<String, List<EmployeeStatusVO>> userMap = statusMap.get(userId);
+			Map<String, EmployeeStatusVO> userMap = statusMap.get(userId);
 			Date fromDate = employeeSchedule.getFromDate();
 			String month = new SimpleDateFormat("MMMM").format(fromDate).toUpperCase();
 			
 			if(!userMap.containsKey(month)){
-				userMap.put(month, new ArrayList<>());
+				EmployeeStatusVO statusVO = new EmployeeStatusVO();
+
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(fromDate);
+				statusVO.setMonth(calendar.get(Calendar.MONTH));
+				statusVO.setYear(calendar.get(Calendar.YEAR));
+				
+				userMap.put(month, statusVO);
 			}
-			List<EmployeeStatusVO> statusList = userMap.get(month);
+			EmployeeStatusVO statusVO = userMap.get(month);
 			
 			EmployeeStatus status = employeeSchedule.getStatus();
 			//EmployeeStatus employeeStatus = statusCodeMap.get(status);
-			EmployeeStatusVO statusVO = new EmployeeStatusVO();
 			
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(fromDate);
-			statusVO.setMonth(calendar.get(Calendar.MONTH));
-			statusVO.setYear(calendar.get(Calendar.YEAR));
+			
 			EmployeeStatusDurationVO duration = new EmployeeStatusDurationVO();
 			duration.setStartDate(fromDate);
 			duration.setEndDate(employeeSchedule.getToDate());
@@ -105,7 +108,7 @@ public class ScheduleController extends BaseController
 			duration.setStyle(status.getStyle());
 			
 			statusVO.getStatusDurations().add(duration );
-			statusList.add(statusVO);
+			
 		}
 		
 		List<User> users = userRepository.findAll();
@@ -144,7 +147,7 @@ public class ScheduleController extends BaseController
 			}
 			else
 			{
-				Map<String, List<EmployeeStatusVO>> userMap = statusMap.get(userId);
+				Map<String, EmployeeStatusVO> userMap = statusMap.get(userId);
 				List<EmployeeStatusVO> employeeStatus = new ArrayList<>();
 				for (int j = 0; j < 12; j++) 
 				{
@@ -153,66 +156,32 @@ public class ScheduleController extends BaseController
 					status.setMonth(j);
 				    String monthName = getMonthName(j);
 				   
-					if(userMap.containsKey(monthName) && !userMap.get(monthName).isEmpty()){
-						List<EmployeeStatusVO> empStatusList = userMap.get(monthName);
-						for (EmployeeStatusVO empStatus : empStatusList)
+					if(userMap.containsKey(monthName) && userMap.get(monthName) != null)
+					{
+						EmployeeStatusVO empStatus = userMap.get(monthName);
+						
+						List<EmployeeStatusDurationVO> statusDurations = empStatus.getStatusDurations();
+						Collections.sort(statusDurations, new Comparator<EmployeeStatusDurationVO>()
 						{
-							List<EmployeeStatusDurationVO> statusDurations = empStatus.getStatusDurations();
-							Collections.sort(statusDurations, new Comparator<EmployeeStatusDurationVO>()
-							{
 
-								@Override
-								public int compare(EmployeeStatusDurationVO o1, EmployeeStatusDurationVO o2)
-								{
-									return o1.getStartDate().compareTo(o2.getStartDate());
-								}
-							});
-							int start = 1;
-							for (EmployeeStatusDurationVO employeeStatusDurationVO : statusDurations)
+							@Override
+							public int compare(EmployeeStatusDurationVO o1, EmployeeStatusDurationVO o2)
 							{
-								Calendar calendar = Calendar.getInstance();
-								calendar.setTime(employeeStatusDurationVO.getStartDate());
-								int day = calendar.get(Calendar.DATE);
-								if(day > start)
-								{
-									EmployeeStatusDurationVO durationVO = new EmployeeStatusDurationVO();
-									
-									Date startDate = CommonUtils.buildDate(year, j, start);
-									Date endDate = CommonUtils.buildDate(year, j, day-1);
-									durationVO.setStartDate(startDate);
-									durationVO.setEndDate(endDate);
-									
-									durationVO.setStatus(statusCodeMap.get("AV_OFF").getDescription());
-									durationVO.setStyle(statusCodeMap.get("AV_OFF").getStyle());
-									
-									status.getStatusDurations().add(durationVO);
-								}
-								EmployeeStatusDurationVO durationVO = new EmployeeStatusDurationVO();
-								
-								//Date date = CommonUtils.buildDate(year, j, 1);
-								Date startDate = employeeStatusDurationVO.getStartDate();
-								Date endDate = employeeStatusDurationVO.getEndDate();
-								durationVO.setStartDate(startDate);
-								durationVO.setEndDate(endDate);
-								
-								durationVO.setStatus(employeeStatusDurationVO.getStatus());
-								durationVO.setStyle(employeeStatusDurationVO.getStyle());
-								
-								status.getStatusDurations().add(durationVO);
-								
-								calendar.setTime(employeeStatusDurationVO.getEndDate());
-								day = calendar.get(Calendar.DATE);
-								
-								start = day + 1;
+								return o1.getStartDate().compareTo(o2.getStartDate());
 							}
-							Calendar mycal = new GregorianCalendar(year, j, 1);
-							int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
-							if(start <= daysInMonth)
+						});
+						int start = 1;
+						for (EmployeeStatusDurationVO employeeStatusDurationVO : statusDurations)
+						{
+							Calendar calendar = Calendar.getInstance();
+							calendar.setTime(employeeStatusDurationVO.getStartDate());
+							int day = calendar.get(Calendar.DATE);
+							if(day > start)
 							{
 								EmployeeStatusDurationVO durationVO = new EmployeeStatusDurationVO();
 								
 								Date startDate = CommonUtils.buildDate(year, j, start);
-								Date endDate = CommonUtils.buildDate(year, j, daysInMonth);
+								Date endDate = CommonUtils.buildDate(year, j, day-1);
 								durationVO.setStartDate(startDate);
 								durationVO.setEndDate(endDate);
 								
@@ -221,7 +190,41 @@ public class ScheduleController extends BaseController
 								
 								status.getStatusDurations().add(durationVO);
 							}
+							EmployeeStatusDurationVO durationVO = new EmployeeStatusDurationVO();
+							
+							//Date date = CommonUtils.buildDate(year, j, 1);
+							Date startDate = employeeStatusDurationVO.getStartDate();
+							Date endDate = employeeStatusDurationVO.getEndDate();
+							durationVO.setStartDate(startDate);
+							durationVO.setEndDate(endDate);
+							
+							durationVO.setStatus(employeeStatusDurationVO.getStatus());
+							durationVO.setStyle(employeeStatusDurationVO.getStyle());
+							
+							status.getStatusDurations().add(durationVO);
+							
+							calendar.setTime(employeeStatusDurationVO.getEndDate());
+							day = calendar.get(Calendar.DATE);
+							
+							start = day + 1;
 						}
+						Calendar mycal = new GregorianCalendar(year, j, 1);
+						int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+						if(start <= daysInMonth)
+						{
+							EmployeeStatusDurationVO durationVO = new EmployeeStatusDurationVO();
+							
+							Date startDate = CommonUtils.buildDate(year, j, start);
+							Date endDate = CommonUtils.buildDate(year, j, daysInMonth);
+							durationVO.setStartDate(startDate);
+							durationVO.setEndDate(endDate);
+							
+							durationVO.setStatus(statusCodeMap.get("AV_OFF").getDescription());
+							durationVO.setStyle(statusCodeMap.get("AV_OFF").getStyle());
+							
+							status.getStatusDurations().add(durationVO);
+						}
+						
 						
 					} else {
 						EmployeeStatusDurationVO durationVO = new EmployeeStatusDurationVO();

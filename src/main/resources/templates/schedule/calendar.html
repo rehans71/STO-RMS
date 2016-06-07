@@ -33,7 +33,7 @@
                   </div>
                 </div>
                 <div class="box-body table-responsive pad " >
-                  <table class="table table-bordered text-center" style="width: 2300px;">
+                  <table class="table table-bordered text-center" style="width: 3600px;">
                     <tr>
                       <th class="bg-purple">Employee</th>
                       <th class="bg-purple">Jan</th>
@@ -59,7 +59,7 @@
                       	<span th:each="duration : ${status.statusDurations}">
 	                      	<span th:each="day : ${#numbers.sequence(1, duration.getNumberOfDays())}"
 	                      			th:classappend="${duration.style}"
-	                      		>
+	                      		th:text="${day}">
 	                      	&nbsp;
 	                      	</span>
                       	</span>
