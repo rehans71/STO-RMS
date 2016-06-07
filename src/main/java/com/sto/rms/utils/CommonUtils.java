@@ -78,4 +78,11 @@ public class CommonUtils
 		
 		return end - start +1;
 	}
+	
+	
+	public static String getMonthName(int month){
+	    String[] monthNames = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+	    						"JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
+	    return monthNames[month];
+	}
 }
