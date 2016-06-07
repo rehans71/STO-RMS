@@ -3,6 +3,9 @@
  */
 package com.sto.rms.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Siva
  *
@@ -11,9 +14,8 @@ public class EmployeeStatusVO
 {
 	private Integer year;
 	private Integer month;
-	private String status;
-	private String style;
-
+	private List<EmployeeStatusDurationVO> statusDurations = new ArrayList<>();
+	
 	public Integer getYear() {
 		return year;
 	}
@@ -26,17 +28,13 @@ public class EmployeeStatusVO
 	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	public String getStatus() {
-		return status;
+	public List<EmployeeStatusDurationVO> getStatusDurations()
+	{
+		return statusDurations;
 	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getStyle() {
-		return style;
-	}
-	public void setStyle(String style) {
-		this.style = style;
+	public void setStatusDurations(List<EmployeeStatusDurationVO> statusDurations)
+	{
+		this.statusDurations = statusDurations;
 	}
 	
 }

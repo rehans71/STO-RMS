@@ -32,8 +32,8 @@
                     </a>
                   </div>
                 </div>
-                <div class="box-body pad table-responsive">
-                  <table class="table table-bordered text-center">
+                <div class="box-body table-responsive pad " >
+                  <table class="table table-bordered text-center" style="width: 2300px;">
                     <tr>
                       <th class="bg-purple">Employee</th>
                       <th class="bg-purple">Jan</th>
@@ -51,14 +51,19 @@
                     </tr>
                     <tr th:each="cal : ${calendars}">
                       <td style="padding: 0px;"><button class="btn btn-block bg-navy btn-flat" th:text="${cal.empName}">Emp 1</button></td>
-                      <td style="padding: 0px; border: 0px;" th:each="status : ${cal.employeeStatus}">
-                      	<a class="btn btn-block btn-default btn-flat" 
-                      			th:classappend="${status.style}"                      			
-                      			data-toggle="modal" 
-                      			data-target="#calModel"
-                      			th:title="${status.status}"
-                      			th:attr="data-empid=${cal.empId},data-empName=${cal.empName},data-year=${status.year},data-month=${status.month}"
-                      			>&nbsp;</a>
+                      <td style="padding: 0px; border: 0px;" th:each="status : ${cal.employeeStatus}"
+                      	data-toggle="modal" 
+					    data-target="#calModel"
+					    
+					    th:attr="data-empid=${cal.empId},data-empName=${cal.empName},data-year=${status.year},data-month=${status.month}">
+                      	<span th:each="duration : ${status.statusDurations}">
+	                      	<span th:each="day : ${#numbers.sequence(1, duration.getNumberOfDays())}"
+	                      			th:classappend="${duration.style}"
+	                      		>
+	                      	&nbsp;
+	                      	</span>
+                      	</span>
+                      	
                       </td>                      
                     </tr>
                    

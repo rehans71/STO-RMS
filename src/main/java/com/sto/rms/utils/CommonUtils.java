@@ -65,4 +65,17 @@ public class CommonUtils
 		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH)); 
 		return c.getTime();
 	}
+
+	public static int getNumberOfDaysBetween(Date startDate, Date endDate)
+	{
+		Calendar c1 = Calendar.getInstance();      
+		c1.setTime(startDate);
+		int start = c1.get(Calendar.DATE);
+		
+		Calendar c2 = Calendar.getInstance();      
+		c2.setTime(endDate);
+		int end = c2.get(Calendar.DATE);
+		
+		return end - start +1;
+	}
 }
