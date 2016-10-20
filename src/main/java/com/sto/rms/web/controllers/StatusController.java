@@ -2,8 +2,6 @@ package com.sto.rms.web.controllers;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import ch.qos.logback.core.util.StatusPrinter;
 
 import com.sto.rms.entities.EmployeeStatus;
 import com.sto.rms.repositories.StatusRepository;

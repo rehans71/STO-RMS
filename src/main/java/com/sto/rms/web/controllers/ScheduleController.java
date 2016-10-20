@@ -3,10 +3,7 @@
  */
 package com.sto.rms.web.controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,11 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sto.rms.entities.EmployeeSchedule;
@@ -28,14 +23,10 @@ import com.sto.rms.entities.EmployeeStatus;
 import com.sto.rms.entities.User;
 import com.sto.rms.model.CalendarEntry;
 import com.sto.rms.model.EmployeeCalendar;
-import com.sto.rms.model.EmployeeStatusEvent;
-import com.sto.rms.model.EmployeeStatusVO;
 import com.sto.rms.repositories.EmployeeScheduleRepository;
 import com.sto.rms.repositories.EmployeeStatusRepository;
-import com.sto.rms.security.AuthenticatedUser;
 import com.sto.rms.services.CalendarService;
 import com.sto.rms.services.SecurityService;
-import com.sto.rms.utils.CommonUtils;
 
 /**
  * @author Siva
@@ -44,12 +35,10 @@ import com.sto.rms.utils.CommonUtils;
 @Controller
 public class ScheduleController extends BaseController
 {	
-	@Autowired
-	private CalendarService calendarService;
+	@Autowired private CalendarService calendarService;
 	@Autowired protected SecurityService securityService;
 	@Autowired protected EmployeeStatusRepository employeeStatusRepository;
 	@Autowired protected EmployeeScheduleRepository employeeScheduleRepository;
-	protected AuthenticatedUser authenticatedUser;
 	
 	@Override
 	protected String getHeaderTitle() {
