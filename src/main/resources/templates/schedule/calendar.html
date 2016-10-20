@@ -33,24 +33,24 @@
                   </div>
                 </div>
                 <div class="box-body table-responsive pad " >
-                  <table class="table table-bordered text-center" style="width: 3600px;">
+                  <table class="table table-bordered text-center" style="width: 2200px;">
                     <tr>
-                      <th class="bg-purple">Employee</th>
-                      <th class="bg-purple">Jan</th>
-                      <th class="bg-purple">Feb</th>
-                      <th class="bg-purple">Mar</th>
-                      <th class="bg-purple">Apr</th>
-                      <th class="bg-purple">May</th>
-                      <th class="bg-purple">Jun</th>
-                      <th class="bg-purple">Jul</th>
-                      <th class="bg-purple">Aug</th>
-                      <th class="bg-purple">Sep</th>
-                      <th class="bg-purple">Oct</th>
-                      <th class="bg-purple">Nov</th>
-                      <th class="bg-purple">Dec</th>
+                      <th class="bg-gray">Employee</th>
+                      <th class="bg-gray">Jan</th>
+                      <th class="bg-gray">Feb</th>
+                      <th class="bg-gray">Mar</th>
+                      <th class="bg-gray">Apr</th>
+                      <th class="bg-gray">May</th>
+                      <th class="bg-gray">Jun</th>
+                      <th class="bg-gray">Jul</th>
+                      <th class="bg-gray">Aug</th>
+                      <th class="bg-gray">Sep</th>
+                      <th class="bg-gray">Oct</th>
+                      <th class="bg-gray">Nov</th>
+                      <th class="bg-gray">Dec</th>
                     </tr>
                     <tr th:each="cal : ${calendars}">
-                      <td style="padding: 0px;"><button class="btn btn-block bg-navy btn-flat" th:text="${cal.empName}">Emp 1</button></td>
+                      <td style="padding: 0px;"><button class="btn btn-block bg-gray btn-flat" th:text="${cal.empName}">Emp 1</button></td>
                       <td style="padding: 0px; border: 0px;" th:each="status : ${cal.employeeStatus}"
                       	data-toggle="modal" 
 					    data-target="#calModel"
@@ -59,7 +59,7 @@
                       	<span th:each="duration : ${status.statusDurations}">
 	                      	<span th:each="day : ${#numbers.sequence(1, duration.getNumberOfDays())}"
 	                      			th:classappend="${duration.style}"
-	                      		th:text="${day}">
+	                      		>
 	                      	&nbsp;
 	                      	</span>
                       	</span>
@@ -87,7 +87,14 @@
 				  </div>
                 </div><!-- /.box -->
               </div>
-            </div><!-- /.col -->
+              <div class="box-tools pull-right">
+				<div   class="input-group" style="width: 150px;"  th:object="${calendars}">
+<!-- 					<a class="btn btn-sm btn-default" th:href="@{/calendar/new/{id}{id=${calendars.empId}}}"> <i class="fa fa-plus-circle"></i> New Calendar Entry</a> -->
+					<a class="btn btn-sm btn-default" th:href="@{/calendar/new}"> <i class="fa fa-plus-circle"></i> New Calendar Entry</a>
+<!-- 					<a class="btn btn-sm btn-default" th:href="@{/calendar/new/{id}(id=1)}"> <i class="fa fa-plus-circle"></i> New Calendar Entry</a> -->
+				</div>
+				</div>
+			</div><!-- /.col -->
             </div>
     	</div>
 
@@ -146,9 +153,8 @@
 		    			
 		    		});
 		    	});
-		   </script> 
-		</div>
-		
-    </body>
+		   </script>
+	</div>
+</body>
     
 </html>

@@ -24,7 +24,7 @@ INSERT INTO roles (id, name) VALUES
 INSERT INTO users (id, email, password, name) VALUES 
 (1, 'superadmin@gmail.com', '$2a$10$p3PHnpoBAnzZiL8mr3gMieMhVVSb585ajC2ZsBB0kwb4KvZKFSdNi', 'Super Admin'),
 (2, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Admin'),
-(3, 'siva@gmail.com', '$2a$10$UFEPYW7Rx1qZqdHajzOnB.VBR3rvm7OI7uSix4RadfQiNhkZOi2fi', 'Siva'),
+(3, 'jim@gmail.com', '$2a$10$UFEPYW7Rx1qZqdHajzOnB.VBR3rvm7OI7uSix4RadfQiNhkZOi2fi', 'jim'),
 (4, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'DemoUser')
 ;
 
@@ -53,11 +53,11 @@ insert into emp_status (id, code, description, style) values
 insert into emp_schedule(id, emp_id, from_date, to_date, status) values
 (1,2,'2016-01-01', '2016-01-10', 2),
 
-(2,2,'2016-02-01', '2016-02-28', 1),
-(3,2,'2016-03-01', '2016-03-30', 2),
-(4,2,'2016-04-01', '2016-04-30', 3),
-(5,2,'2016-05-01', '2016-05-30', 3),
-(6,2,'2016-06-01', '2016-06-30', 5),
+(2,2,'2016-02-01', '2016-02-15', 1),
+(3,2,'2016-03-01', '2016-03-15', 2),
+(4,2,'2016-04-01', '2016-04-20', 3),
+(5,2,'2016-05-01', '2016-05-10', 3),
+(6,2,'2016-06-01', '2016-06-25', 5),
 
 (7,3,'2016-01-01', '2016-01-30', 1),
 (8,3,'2016-02-01', '2016-02-28', 1),

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">RMS</title>
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">ShipBoard Management System</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css}"/>
@@ -36,9 +36,9 @@
         <!-- Logo -->
         <a href="#" th:href="@{/home}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>RMS</b></span>
+          <span class="logo-mini"><b>SBMS</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>RMS</b></span>
+          <span class="logo-lg"><b>ShipBoard Mgnt</b></span>
         </a>
 
         <!-- Header Navbar -->
@@ -101,7 +101,15 @@
             <li th:class="${CURRENT_MENU == 'Users'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/users'}"><i class="fa fa-users"></i> <span>Users</span></a></li>
             <li th:class="${CURRENT_MENU == 'Roles'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_ROLES')"><a href="#" th:href="@{'/roles'}"><i class="fa fa-user"></i> <span>Roles</span></a></li>
             <li th:class="${CURRENT_MENU == 'Permissions'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PERMISSIONS')"><a href="#" th:href="@{'/permissions'}"><i class="fa fa-shield"></i> <span>Permissions</span></a></li>
-            <li th:class="${CURRENT_MENU == 'Calendar'}? 'active' : ''"><a href="#" th:href="@{'/calendar'}"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
+            <li th:class="${CURRENT_MENU == 'WhereAbotus'}? 'active' : ''"><a href="#" th:href="@{'/calendar'}"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Events'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/events'}"><i class="fa fa-tasks"></i> <span>Events</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Projects'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/projects'}"><i class="fa fa-tasks"></i> <span>Projects</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Labs'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/labs'}"><i class="fa fa-laptop"></i> <span>Labs</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Documents'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/documents'}"><i class="fa fa-file-pdf-o"></i> <span>Documents</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Procedures'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/procedures'}"><i class="fa fa-list-ol"></i> <span>Procedures</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Communications'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/communications'}"><i class="fa fa-commenting"></i> <span>Communications</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Ships'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/ships'}"><i class="fa fa-ship"></i> <span>Ships</span></a></li>
+            <li th:class="${CURRENT_MENU == 'Monitor'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/monitor'}"><i class="fa fa-heartbeat"></i> <span>Monitor</span></a></li>
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

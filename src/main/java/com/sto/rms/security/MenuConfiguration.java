@@ -23,6 +23,7 @@ public class MenuConfiguration
 		MENU_URL_PATTERN_MAP.put("/roles", "Roles");
 		MENU_URL_PATTERN_MAP.put("/permissions", "Permissions");
 		MENU_URL_PATTERN_MAP.put("/calendar", "Calendar");
+		MENU_URL_PATTERN_MAP.put("/events", "Event");
 		
 	}
 	

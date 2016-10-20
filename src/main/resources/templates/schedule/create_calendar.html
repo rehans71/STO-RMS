@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout/mainLayout">
+	
+	<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+
+<head>
+<title>Calender - New</title>
+</head>
+<body>
+	<div layout:fragment="pageHeader">
+		<section class="content-header">
+			<h1>Manage Calendar</h1>
+		</section>
+	</div>
+	<div layout:fragment="content">
+
+		<div class="box box-warning">
+			<div class="box-header with-border">
+				<h3 class="box-title">Create New Calendar</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<form role="form" th:action="@{/calendar/newEntry}" th:object="${calendarEntry}" method="post">
+					<!-- text input -->
+					<div class="form-group">
+						<label>Employee</label> 
+						<select class="form-control" th:field="*{user}" th:remove="all-but-first">
+							<option th:each="user : ${allUsers}"
+									th:value="${user.id}" th:text="${user.name}">List of Users</option>
+						</select>
+<!-- 						<input type="text" class="form-control" name="empid" th:field="*{empid}" placeholder="Enter User Id" /> -->
+<!-- 						<p th:if="${#fields.hasErrors('empid')}" th:errors="*{empid}" th:class="text-red">Incorrect data</p> -->
+					</div>
+					<!-- text input -->
+					<div class="form-group">
+						<label class="control-label" for="date" >Start Date</label> 
+						<input type="date" class="form-control" id="startDate" name="startDate" placeholder="Enter Start Date(MM-DD-YYY)" />
+<!-- 						<input type="text" class="form-control" name="startDate" th:field="*{startDate}" placeholder="Enter Start Date" /> -->
+<!-- 						<input type="text" class="form-control" name="startDate" th:field="*{startDate}" th:value="${startDate}?${#dates.format(startDate, 'yyyy-MM-dd')}:''" placeholder="Enter End Date" /> -->
+<!-- 						<input type="text" class="form-control" name="startDate" th:field="*{startDate}" placeholder="Enter Start Date" /> -->
+<!-- 						<p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" th:class="text-red">Incorrect data</p> -->
+					</div>
+
+					<div class="form-group" data-provide="datepicker">
+						<label>End Date</label> 
+						<input type="date" class="form-control" id="date" name="date" th:field="*{endDate}" placeholder="Enter End Date" />
+<!-- 						<p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" th:class="text-red">Incorrect data</p> -->
+					</div>
+
+					<div class="form-group">
+						<label>Event</label> 
+<!-- 						<input type="text" class="form-control" name="event" th:field="*{status}" placeholder="Enter status" />  -->
+						<select class="form-control" th:field="*{status}" th:remove="all-but-first">
+							<option th:each="status : ${allStatus}" 
+									th:value="${status.id}" th:text="${status.description}">List of Events</option>
+							<option>Another payment method</option>
+                			<option>Another payment method</option>
+						</select>
+						<!-- 						<p th:if="${#fields.hasErrors('event')}" th:errors="*{event}" th:class="text-red">Incorrect data</p> -->
+					</div>
+
+					<div class="box-footer">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</form>
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</body>
+</html>

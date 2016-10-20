@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * @author Siva
  *
@@ -34,10 +36,12 @@ public class EmployeeSchedule
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="from_date", nullable=false)
+//	@NotEmpty
 	private Date fromDate;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="to_date", nullable=false)
+//	@NotEmpty
 	private Date toDate;
 	
 	@OneToOne

@@ -16,6 +16,11 @@ public class EmployeeStatusVO
 	private Integer month;
 	private List<EmployeeStatusDurationVO> statusDurations = new ArrayList<>();
 	
+	
+	
+	public EmployeeStatusVO() {
+
+	}
 	public Integer getYear() {
 		return year;
 	}
