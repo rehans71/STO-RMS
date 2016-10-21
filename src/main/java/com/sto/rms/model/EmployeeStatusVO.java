@@ -16,7 +16,25 @@ public class EmployeeStatusVO
 	private Integer month;
 	private List<EmployeeStatusDurationVO> statusDurations = new ArrayList<>();
 	
-	
+	public List<DayView> getMonthStatus()
+	{
+		List<DayView> dayViews = new ArrayList<>();
+		int day = 0;
+		for (EmployeeStatusDurationVO statusDuration : statusDurations)
+		{
+			int numberOfDays = statusDuration.getNumberOfDays();
+			for (int i = 0; i < numberOfDays; i++) 
+			{
+				day++;
+				DayView dayView = new DayView();
+				
+				dayView.setDay ( day);
+				dayView.setStatusDurationVO(statusDuration);
+				dayViews.add(dayView);
+			}			
+		}
+		return dayViews;
+	}
 	
 	public EmployeeStatusVO() {
 

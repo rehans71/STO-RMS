@@ -33,7 +33,7 @@
                   </div>
                 </div>
                 <div class="box-body table-responsive pad " >
-                  <table class="table table-bordered text-center" style="width: 2200px;">
+                  <table class="table table-bordered" style="width: 5500px;">
                     <tr>
                       <th class="bg-gray">Employee</th>
                       <th class="bg-gray">Jan</th>
@@ -50,15 +50,17 @@
                       <th class="bg-gray">Dec</th>
                     </tr>
                     <tr th:each="cal : ${calendars}">
-                      <td style="padding: 0px;"><button class="btn btn-block bg-gray btn-flat" th:text="${cal.empName}">Emp 1</button></td>
+                      <td style="padding: 0px;">
+                      	<button class="btn btn-block bg-gray btn-flat" th:text="${cal.empName}">Emp 1</button>
+                      </td>
                       <td style="padding: 0px; border: 0px;" th:each="status : ${cal.employeeStatus}"
                       	data-toggle="modal" 
 					    data-target="#calModel"
 					    
 					    th:attr="data-empid=${cal.empId},data-empName=${cal.empName},data-year=${status.year},data-month=${status.month}">
-                      	<span th:each="duration : ${status.statusDurations}">
-	                      	<span th:each="day : ${#numbers.sequence(1, duration.getNumberOfDays())}"
-	                      			th:classappend="${duration.style}"
+                      	<span th:each="dayView : ${status.getMonthStatus()}">
+	                      	<span	th:classappend="${dayView.statusDurationVO.style}"
+	                      			th:text="${dayView.day}"
 	                      		>
 	                      	&nbsp;
 	                      	</span>
